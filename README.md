@@ -89,6 +89,14 @@ Target acceptance criteria:
 4. Progress and errors can be observed.
 5. The final `result.mp4` is returned to the caller.
 
+## Documentation
+
+- [Architecture](docs/ARCHITECTURE.md) — Agent / Skill / Workflow / ComfyUI layering, gateway, registry, job model, backend routing, chaining, and production restrictions.
+- [Skill Specification](docs/SKILL_SPEC.md) — skill package contract, manifests, normalized errors, retry policy, versioning, and POC acceptance criteria.
+- [Roadmap](docs/ROADMAP.md) — phased implementation plan from hardened workflow to Hermes/OpenClaw integration and multi-backend GPU routing.
+- [Capability Registry Example](config/capabilities.example.yaml) — example backend/capability/workflow registry.
+- [Video Face Swap Skill Example](examples/video_faceswap/SKILL.md) — first agent-facing skill template.
+
 ## Planned repository structure
 
 ```text
