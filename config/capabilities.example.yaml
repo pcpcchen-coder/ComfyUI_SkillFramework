@@ -1,0 +1,81 @@
+version: "1"
+
+backends:
+  rtx-pc-01:
+    type: local_comfy
+    enabled: true
+    endpoint: http://127.0.0.1:8188
+    tags:
+      - cuda
+      - video
+
+  cloud-video-01:
+    type: remote_comfy
+    enabled: false
+    endpoint: https://example.invalid/comfy
+    tags:
+      - cloud
+      - heavy-video
+
+skills:
+  video_faceswap:
+    enabled: true
+    skill_version: "0.1.0"
+    default_profile: standard
+    allowed_backends:
+      - rtx-pc-01
+
+    profiles:
+      fast:
+        workflow: skills/video_faceswap/workflows/fast.json
+        workflow_version: "0.1.0"
+        estimated_vram_gb: 8
+
+      standard:
+        workflow: skills/video_faceswap/workflows/standard.json
+        workflow_version: "0.1.0"
+        estimated_vram_gb: 12
+
+      high:
+        workflow: skills/video_faceswap/workflows/quality.json
+        workflow_version: "0.1.0"
+        estimated_vram_gb: 16
+
+    workflow_bindings:
+      inputs:
+        video:
+          node: "12"
+          field: video
+        face:
+          node: "25"
+          field: image
+
+      outputs:
+        video:
+          node: "94"
+
+    policies:
+      requires_identity_authorization: true
+      max_attempts: 2
+      temporary_input_retention_hours: 24
+
+  video_upscale:
+    enabled: false
+    skill_version: "0.1.0"
+    default_profile: standard
+    allowed_backends:
+      - rtx-pc-01
+
+  image_to_video:
+    enabled: false
+    skill_version: "0.1.0"
+    default_profile: standard
+    allowed_backends:
+      - cloud-video-01
+
+  lipsync:
+    enabled: false
+    skill_version: "0.1.0"
+    default_profile: standard
+    allowed_backends:
+      - rtx-pc-01

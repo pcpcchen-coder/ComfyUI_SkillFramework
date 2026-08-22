@@ -1,0 +1,45 @@
+name: comfy_video_faceswap
+version: "0.1.0"
+description: Replace a face in an existing video using a reference face image.
+
+inputs:
+  video:
+    type: file
+    media_type: video
+    required: true
+  face:
+    type: file
+    media_type: image
+    required: true
+
+options:
+  quality:
+    type: enum
+    values: [fast, standard, high]
+    default: standard
+
+outputs:
+  video:
+    type: file
+    media_type: video/mp4
+
+policies:
+  requires_identity_authorization: true
+  temporary_input_retention: true
+
+profiles:
+  fast:
+    workflow: workflows/fast.json
+  standard:
+    workflow: workflows/standard.json
+  high:
+    workflow: workflows/high.json
+
+# Replace these node/field pairs after exporting the real ComfyUI workflow in API format.
+bindings:
+  video:
+    node: "12"
+    field: video
+  face:
+    node: "25"
+    field: image
